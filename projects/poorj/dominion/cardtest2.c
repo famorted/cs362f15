@@ -43,8 +43,8 @@ int testVillageCard(){
 	/*checks if village is in player's hand*/
 	for(i = 0; i < state.handCount[player]; i++){
 		cardNumToName(state.hand[player][i], cardName); //get name from card num
-		printf("%s ", cardName);
-		if(strcmp(cardName, "village") == 0){
+		printf("%s ", name);
+		if(strcmp(name, "village") == 0){
 			hasVillage = 1; //village card is in player's hand
 		}
 	}
@@ -52,7 +52,7 @@ int testVillageCard(){
 	if (hasVillage == 1){
 		printf ("Player has village\n");
 		printf ("Using village card\n");
-		villageEffect(player, &state, i); //uses village card
+		villageEffect(player, state, i); //uses village card
 		
 		/*Village adds 1 card and discards itself*/
 		if (state.handCount[player] == 5)

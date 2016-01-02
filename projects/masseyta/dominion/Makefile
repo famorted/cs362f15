@@ -38,6 +38,8 @@ unittestresults.out:
 	make unittest2
 	make unittest3
 	make unittest4
+	echo "Coverage Unittest4, entire dominion.c: " >> unittestresults.out
+	gcov -b dominion.c >> unittestresults.out
 	echo "----------------- RUNNING TEST BUNDLE : Printout --------------" >> unittestresults.out
 	echo "All" >> unittestresults.out
 	make tests >> unittestresults.out

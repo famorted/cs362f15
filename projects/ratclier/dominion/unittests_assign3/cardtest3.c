@@ -1,15 +1,3 @@
-//
-// *****************************************************************************
-// 
-// Author:    Erik Ratcliffe
-// Date:      October 25, 2015
-// Project:   Assignment 3 - Unit Tests
-// Filename:  cardtest3.c
-// Class:     CS 362 (Fall 2015)
-//
-// *****************************************************************************
-//
-
 #include <stdio.h>
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -34,31 +22,24 @@
 //
 int testTreasureMapCard(struct gameState *state, int handPos, int currentPlayer)
 {
-    int origNumTreasureMap = 0;   // orig number of treasure map cards
-    int newNumTreasureMap  = 0;   // new number of treasure map cards
-    int origTopGolds       = 0;   // orig number of golds at top of deck
-    int newTopGolds        = 0;   // new number of golds at top of deck
-    int idx;                      // loop iterator
     struct gameState *origState;  // copy of game state
+    int origNumTreasureMap = 0;
+    int newNumTreasureMap = 0;
+    int newTopGolds = 0;
+    int origTopGolds = 0;
+    int idx;
 
     // Make a copy of the original game state
     //
     origState = copyState(state);
 
-    // Run the treasure map card function
-    //
     treasureMapCard(state, handPos);
 
-    // Determine original number of treasure map cards in hand
-    //
     for(idx = 0; idx < origState->handCount[currentPlayer]; idx++)
     {
         if(origState->hand[currentPlayer][idx] == treasure_map)
             origNumTreasureMap++;
     }
-
-    // Determine new number of treasure map cards in hand
-    //
     for(idx = 0; idx < state->handCount[currentPlayer]; idx++)
     {
         if(state->hand[currentPlayer][idx] == treasure_map)
@@ -111,6 +92,7 @@ int testTreasureMapCard(struct gameState *state, int handPos, int currentPlayer)
         {
             printf("treasureMapCard: PASS did not discard two TMs, golds not added to top of deck\n");
         }
+
     }
     else 
     {
@@ -139,12 +121,12 @@ int testTreasureMapCard(struct gameState *state, int handPos, int currentPlayer)
 
 int main(int argc, char *argv[])
 {
-    int numPlayers = 2;      // default number of players
-    int randomSeed = 100;    // random seed for the game
-    int handPos;             // card in play
-    int currentPlayer;       // self explanatory
-    struct gameState *state; // holds the new game state
+    int numPlayers = 2;
+    int handPos;
+    int currentPlayer;
     int kingdomCards[10] = {adventurer, gardens, embargo, village, minion, treasure_map, cutpurse, sea_hag, tribute, smithy};
+    int randomSeed = 100;
+    struct gameState *state;
 
     // New game
     //
@@ -153,10 +135,11 @@ int main(int argc, char *argv[])
 
     printf("\n");
 
-    // Test for one treasure map card
+    // Discard a trashed card
     //
     printf(">>> TESTING: one treasure map card...\n");
     currentPlayer = 0;
+    //state->hand[currentPlayer][0] = treasure_map;
     gainCard(treasure_map, state, 2, currentPlayer);
     handPos = state->hand[currentPlayer][0];
     testTreasureMapCard(state, handPos, currentPlayer);
@@ -166,8 +149,6 @@ int main(int argc, char *argv[])
     state = newGame();
     initializeGame(numPlayers, kingdomCards, randomSeed, state);
 
-    // Test for two treasure map cards
-    //
     printf(">>> TESTING: two treasure map cards...\n");
     gainCard(treasure_map, state, 2, currentPlayer);
     gainCard(treasure_map, state, 2, currentPlayer);

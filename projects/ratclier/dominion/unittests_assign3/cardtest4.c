@@ -1,15 +1,3 @@
-//
-// *****************************************************************************
-// 
-// Author:    Erik Ratcliffe
-// Date:      October 25, 2015
-// Project:   Assignment 3 - Unit Tests
-// Filename:  cardtest4.c
-// Class:     CS 362 (Fall 2015)
-//
-// *****************************************************************************
-//
-
 #include <stdio.h>
 #include <math.h>
 #include "dominion.h"
@@ -31,6 +19,12 @@
 //
 // You can only gain cards from the supply pile.
 //
+// TO TEST:
+//
+// - Card came from supply pile.
+// - Card went to discard pile.
+// - Card is valued <= 5 (getCost() will tell you this)
+//
 int testFeastCard(struct gameState *state, int currentPlayer, int choice)
 {
     struct gameState *origState;  // copy of game state
@@ -39,8 +33,6 @@ int testFeastCard(struct gameState *state, int currentPlayer, int choice)
     //
     origState = copyState(state);
 
-    // Run the feast card function
-    //
     feastCard(choice, state);
 
     // Is the gained card valued at <= 5 coins?
@@ -98,12 +90,12 @@ int testFeastCard(struct gameState *state, int currentPlayer, int choice)
 
 int main(int argc, char *argv[])
 {
-    int numPlayers = 2;      // default number of players
-    int randomSeed = 100;    // random seed for the game
-    int choice;              // card choice
-    int currentPlayer;       // self explanatory
-    struct gameState *state; // holds the new state of the game
+    int numPlayers = 2;
+    int choice;
+    int currentPlayer;
     int kingdomCards[10] = {adventurer, gardens, embargo, village, minion, cutpurse, sea_hag, tribute, smithy, feast};
+    int randomSeed = 100;
+    struct gameState *state;
 
     // New game
     //
@@ -112,7 +104,9 @@ int main(int argc, char *argv[])
 
     printf("\n");
 
-    // Test for a card choice.
+    printf(">>> TESTING: feast card...\n");
+
+    // Set up arguments to cardEffect().
     //
     // Cards worth up to 5 coins (for choice):
     //
@@ -128,7 +122,6 @@ int main(int argc, char *argv[])
     // Be sure to have the card in kingdomCards[] above! You control this,
     // don't try to be tricky.
     //
-    printf(">>> TESTING: feast card...\n");
     currentPlayer = 0;
     choice = smithy;
     testFeastCard(state, currentPlayer, choice);

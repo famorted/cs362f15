@@ -5,24 +5,14 @@
 
 char inputChar()
 {
-	//ASCII stuff here
-    int i = (rand() % 95) + 32;
-	//int to char
-    return (char)i;
+    // TODO: rewrite this function
+    return ' ';
 }
 
 char *inputString()
 {
-    char *s = (char *)malloc(6);
-     //checks lowercase alpha   
-    s[0] = (char)(rand() % 26 + 97);
-    s[1] = (char)(rand() % 26 + 97);
-    s[2] = (char)(rand() % 26 + 97);
-    s[3] = (char)(rand() % 26 + 97);
-    s[4] = (char)(rand() % 26 + 97);
-    s[5] = '\0';
-        
-    return s;
+    // TODO: rewrite this function
+    return "";
 }
 
 void testme()

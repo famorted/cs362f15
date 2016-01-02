@@ -46,8 +46,8 @@ int testAdventurerCard(){
 	/*checks if adventurer is in player's hand*/
 	for(i = 0; i < state.handCount[player]; i++){
 		cardNumToName(state.hand[player][i], cardName); //get name from card num
-		printf("%s ", cardName);
-		if(strcmp(cardName, "adventurer") == 0){
+		printf("%s ", name);
+		if(strcmp(name, "adventurer") == 0){
 			hasAdventurer = 1; //Adventurer card is in player's hand
 		}
 	}
@@ -55,7 +55,7 @@ int testAdventurerCard(){
 	if (hasAdventurer == 1){
 		printf ("Player has Adventurer\n");
 		printf ("Using Adventurer card\n");
-		adventurerEffect(player, &state); //uses Adventurer card
+		adventurerEffect(player, state); //uses Adventurer card
 		
 		/*Adventurer adds 2 treasure cards and discards itself 5+2-1=6*/
 		if (state.handCount[player] == 6)
@@ -75,7 +75,7 @@ int testAdventurerCard(){
 			
 			/*counts treasure cards in player's hand*/
 			if (strcmp(name, "copper") == 0 || strcmp(name, "silver") == 0 ||
-				strcmp(cardName, "gold") == 0)
+				strcmp(name, "gold") == 0)
 			{
 				numTreasure++;
 			}

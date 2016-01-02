@@ -27,13 +27,13 @@ int percentChanceIsOne(int);
 int calcScore(int playerNum, struct gameState * gs);
 int getCardScore(int c, int cardsInDeck);
 
-int main(int argc, char * argv[]) {
+main(int argc, char * argv[]) {
 	int unit4_test_trials = 10000;
 	
 	if (argc > 1) {
 		unit4_test_trials = atoi(argv[1]);
 		if (unit4_test_trials < 1) {
-			printf("Usage: unittest4 <trials>\r\n");
+			printf("Usage: unittest3 <trials>\r\n");
 			exit(1);
 		}
 	}

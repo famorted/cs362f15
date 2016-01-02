@@ -42,8 +42,8 @@ int testSmithyCard(){
 	/*checks if smithy is in player's hand*/
 	for(i = 0; i < state.handCount[player]; i++){
 		cardNumToName(state.hand[player][i], cardName); //get name from card num
-		printf("%s ", cardName);
-		if(strcmp(cardName, "smithy") == 0){
+		printf("%s ", name);
+		if(strcmp(name, "smithy") == 0){
 			hasSmithy = 1; //Smithy card is in player's hand
 		}
 	}
@@ -51,7 +51,7 @@ int testSmithyCard(){
 	if (hasSmithy == 1){
 		printf ("Player has Smithy\n");
 		printf ("Using Smithy card\n");
-		smithyEffect(player, &state, i); //uses smithy card
+		smithyEffect(player, state, i); //uses smithy card
 
 		/*Smithy adds 3 cards and discards itself 5+3-1==7*/
 		if (state.handCount[player] == 7)

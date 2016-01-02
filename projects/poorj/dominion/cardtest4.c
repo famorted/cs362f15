@@ -47,8 +47,8 @@ int testRemodelCard(){
 	/*checks if Remodel is in player's hand*/
 	for(i = 0; i < state.handCount[player]; i++){
 		cardNumToName(state.hand[player][i], cardName); //get name from card num
-		printf("%s ", cardName);
-		if(strcmp(cardName, "remodel") == 0){
+		printf("%s ", name);
+		if(strcmp(name, "remodel") == 0){
 			hasRemodel = 1; //Remodel card is in player's hand
 		}
 	}
@@ -59,7 +59,7 @@ int testRemodelCard(){
 		
 		/*uses remodel card from hand[4] to get rid of hand[0] and get enum 5 
 		(silver card)*/
-		remodelEffect(player, &state, 4, 0, 5);
+		remodelEffect(player, state, 4, 0, 5);
 		
 		/*checks if player has correct number of each card*/
 		for(i = 0; i < state.handCount[player]; i++){

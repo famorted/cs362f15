@@ -1,15 +1,3 @@
-//
-// *****************************************************************************
-// 
-// Author:    Erik Ratcliffe
-// Date:      October 25, 2015
-// Project:   Assignment 3 - Unit Tests
-// Filename:  cardtest1.c
-// Class:     CS 362 (Fall 2015)
-//
-// *****************************************************************************
-//
-
 #include <stdio.h>
 #include <math.h>
 #include "dominion.h"
@@ -27,16 +15,23 @@
 // the player's hand. Once that is done, the Smithy card itself is
 // discarded.
 //
+// Order of operations: cardEffect()    [switch(smithy)]
+//                      drawCard()      [draw 3 cards]
+//                      discardCard()   [discard a card from hand]
+//
+// TO TEST:
+//
+// - 3 cards are drawn from the deck and added to hand.
+// - Discarded smithy card goes in the played pile. (See your bug above)
+//
 int testSmithyCard(int currentPlayer, struct gameState *state, int handPos)
 {
-    struct gameState *origState;  // copy of original game state
+    struct gameState *origState;  // copy of game state
 
     // Make a copy of the original game state
     //
     origState = copyState(state);
 
-    // Run the smithy card function
-    //
     smithyCard(state, handPos);
 
     // Have three cards been drawn from the deck?
@@ -88,12 +83,12 @@ int testSmithyCard(int currentPlayer, struct gameState *state, int handPos)
 
 int main(int argc, char *argv[])
 {
-    int numPlayers = 2;       // default number of players
-    int randomSeed = 100;     // random seed for the game
-    int currentPlayer;        // self explanatory
-    int handPos;              // card in play
-    struct gameState *state;  // holds updated game state
+    int numPlayers = 2;
+    int currentPlayer;
+    int handPos;
     int kingdomCards[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+    int randomSeed = 100;
+    struct gameState *state;
 
     // New game
     //
@@ -105,6 +100,7 @@ int main(int argc, char *argv[])
     // Test smithy card for player 0
     //
     printf(">>> TESTING: smithy card, player 0...\n");
+    //currentPlayer = whoseTurn(state);
     currentPlayer = 0;
     handPos = floor(Random() * state->handCount[currentPlayer]);
     testSmithyCard(currentPlayer, state, handPos);
@@ -112,6 +108,7 @@ int main(int argc, char *argv[])
     // Test smithy card for player 1
     //
     printf(">>> TESTING: smithy card, player 1...\n");
+    //currentPlayer = whoseTurn(state);
     currentPlayer = 1;
     handPos = floor(Random() * state->handCount[currentPlayer]);
     testSmithyCard(currentPlayer, state, handPos);

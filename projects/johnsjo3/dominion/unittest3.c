@@ -23,7 +23,7 @@ int randomNumber(int, int);
 int percentChanceIsOne(int);
 int depletedSupplies(struct gameState *);
 
-int main(int argc, char * argv[]) {
+main(int argc, char * argv[]) {
 	int unit3_test_trials = 10000;
 	
 	if (argc > 1) {

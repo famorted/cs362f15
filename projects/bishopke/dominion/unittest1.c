@@ -1,7 +1,6 @@
-// Keenan Bishop unittest1.c
-// unittest1.c
-// updateCoins() test
-// from template
+//Keenan Bishop unittest1.c
+//updateCoins() test
+//from template
 
 
 
@@ -59,7 +58,7 @@ void test_updateCoins(){
 #endif
 		
                 if(G.coins == handCount * 1 + bonus){ // check if the number of coins is correct
-			printf("PASS: updateCoins(), copper\t"); 
+			printf("PASS: updateCoins(), copper\n"); 
 		}
 		else{
 			printf("FAIL: updateCoins(), copper\n"); 
@@ -72,7 +71,7 @@ void test_updateCoins(){
 #endif
 
                 if(G.coins == handCount * 2 + bonus){ // check if the number of coins is correct
-			printf("PASS: updateCoins(), silver\t"); 
+			printf("PASS: updateCoins(), silver\n"); 
 		}
 		else{
 			printf("FAIL: updateCoins(), silver\n"); 

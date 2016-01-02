@@ -7,7 +7,7 @@
 
 #define CARD_COUNTING 0
 
-int main()
+int unittest3()
 {
 
 	int seed = 2500;

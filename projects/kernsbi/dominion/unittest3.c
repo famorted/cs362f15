@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1
+#define NOISY_TEST 0
 
 int checkDiscard(int handPosition, int p, struct gameState *post, int trashFlag, int n);
 
@@ -30,7 +30,7 @@ int main(){
 							embargo, outpost, salvager, sea_hag, treasure_map};
 	srand(time(NULL));
 	printf("Testing discardCard():\n");
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 1000; n++){
 		for(i = 0; i < sizeof(struct gameState); i++){//fill gameState with junk
 			((char*)&G)[i] = (rand() % (256));
 		}
@@ -68,7 +68,7 @@ int checkDiscard(int handPosition, int p, struct gameState *post, int trashFlag,
 	memcpy (&pre, post, sizeof(struct gameState));
 	if(discardCard(handPosition, p, post, trashFlag) != 0){//Test 1: function returns correctly
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d	Test 1 failed.\n", n);
+		printf("Test #%d failed.\n", n);
 		printf("DiscardCard function failed\n");
 		#endif
 		errorCount++;
@@ -76,29 +76,29 @@ int checkDiscard(int handPosition, int p, struct gameState *post, int trashFlag,
 	
 	if(pre.handCount[p] > 1 && post->hand[p][post->handCount[p]] != -1){//pre handCount is greater than 1 so post hand should end with -1
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d	Test 2 failed.\n", n);
+		printf("Test #%d failed.\n", n);
 		printf("The player's hand does not end with -1.\n");
 		#endif
 		errorCount++;
 	}
 	if(post->handCount[p] != pre.handCount[p]-1){//post should be one less than pre since post has been decremented
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d	Test 3 failed.\n", n);
-		printf("Expected handCount: %d	Actual handCount: %d\n", pre.handCount[p]-1, post->handCount[p]);
+		printf("Test #%d failed.\n", n);
+		printf("The player's hand count was not decremented.\n");
 		#endif
 		errorCount++;
 	}
 	if(trashFlag < 1 && post->playedCardCount != pre.playedCardCount + 1){//post should have one additional played card if trashFlag is less than one
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d	Test 4 failed.\n", n);
-		printf("Expected playedCardCount: %d	Actual playedCardCount: %d\n", pre.playedCardCount + 1, post->playedCardCount);
+		printf("Test #%d failed.\n", n);
+		printf("Played card count was not incremented\n");
 		#endif
 		errorCount++;
 	}
 	if(pre.discardCount[p] != post->discardCount[p] - 1){//discard count should have been decremented
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d	Test 5 failed.\n", n);
-		printf("Expected discardCount: %d	Actual discardCount: %d\n", pre.discardCount[p]+1, post->discardCount[p]);
+		printf("Test #%d failed.\n", n);
+		printf("Discard count was not incremented\n");
 		#endif
 		errorCount++;
 	}
@@ -123,7 +123,7 @@ int checkDiscard(int handPosition, int p, struct gameState *post, int trashFlag,
 
     	if(memcmp(&pre, post, sizeof(struct gameState)) != 0){//Test 5: Pre and post should be identical
 		#if(NOISY_TEST == 1)
-		printf("Iteration #%d 	Test 6 failed.\n", n);
+		printf("Test #%d failed.\n", n);
 		printf("Memcmp failed\n");	
 		#endif
 		errorCount++;

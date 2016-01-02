@@ -1,20 +1,7 @@
-//
-// *****************************************************************************
-// 
-// Author:    Erik Ratcliffe
-// Date:      October 25, 2015
-// Project:   Assignment 3 - Unit Tests
-// Filename:  cardtest2.c
-// Class:     CS 362 (Fall 2015)
-//
-// *****************************************************************************
-//
-
 #include <stdio.h>
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include "unittest_helpers.h"
-
 
 // Test the adventurer card
 //
@@ -45,19 +32,17 @@
 int testAdventurerCard(struct gameState *state)
 {
     struct gameState *origState;  // copy of game state
-    int lastCard;                 // the last card in the hand
-    int idx;                      // loop iterator
-    int diffDeckCount;            // difference between orig and new deck count
-    int diffDiscardCount;         // difference between orig and new discard count
-    int passFlag      = 1;        // flag for testing proper gain of gold cards
     int currentPlayer = state->whoseTurn;
+    int passFlag = 1;
+    int lastCard;
+    int idx;
+    int diffDeckCount;
+    int diffDiscardCount;
 
     // Make a copy of the original game state
     //
     origState = copyState(state);
 
-    // Run the adventurer card function
-    //
     adventurerCard(state);
 
     // See if handCount increased by two cards
@@ -114,10 +99,10 @@ int testAdventurerCard(struct gameState *state)
 
 int main(int argc, char *argv[])
 {
-    int numPlayers = 2;         // default number of players
-    int randomSeed = 1000;      // random seed for the game
-    struct gameState *state;    // holds the updated game state
+    int numPlayers = 2;
     int kingdomCards[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+    int randomSeed = 1000;
+    struct gameState *state;
 
     // New game
     //

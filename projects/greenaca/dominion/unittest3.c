@@ -1,6 +1,9 @@
 /* -----------------------------------------------------------------------
- * Unit test for getCost()
+ * Demonstration of how to write unit tests for dominion-base
+ * Include the following lines in your makefile:
  *
+ * testUpdateCoins: testUpdateCoins.c dominion.o rngs.o
+ *      gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
  * -----------------------------------------------------------------------
  */
 
@@ -10,6 +13,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include "rngs.h"
+
+// set NOISY_TEST to 0 to remove printfs from output
+#define NOISY_TEST 1
 
 int main() {
     int i;
@@ -33,57 +39,44 @@ int main() {
         golds[i] = gold;
     }
 
-    printf ("TESTING getCost():\n");
+    printf ("TESTING updateCoins():\n");
+    for (p = 0; p < numPlayer; p++)
+    {
+        for (handCount = 1; handCount <= maxHandCount; handCount++)
+        {
+            for (bonus = 0; bonus <= maxBonus; bonus++)
+            {
 
-    char *names[] = {"curse",
-"estate",
-"duchy",
-"province",
-"copper",
-"silver",
-"gold",
-"adventurer",
-"council_room",
-"feast",
-"gardens",
-"mine", 
-"remodel", 
-"smithy",
-"village",
-"baron", 
-"great_hall",
-"minion", 
-"steward", 
-"tribute",
-"ambassador", 
-"cutpurse",
-"embargo", 
-"outpost",
-"salvager", 
-"sea_hag",
-"treasure_map"
-};
+                printf("Test player %d with %d treasure card(s) and %d bonus.\n", p, handCount, bonus);
 
+                memset(&G, 23, sizeof(struct gameState));   // clear the game state
+                r = initializeGame(numPlayer, k, seed, &G); // initialize a new game
+                G.handCount[p] = handCount;                 // set the number of cards on hand
+                memcpy(G.hand[p], coppers, sizeof(int) * handCount); // set all the cards to copper
+                updateCoins(p, &G, bonus);
 
-    int expected_cost[treasure_map + 1] = {0,2,5,8,0,3,6,6,5,4,4,5,4,4,3,4,3,5,3,5,3,4,2,5,4,4,4};
+                printf("G.coins = %d, expected = %d\n", G.coins, handCount * 1 + bonus);
 
-    int actual_cost[treasure_map + 1];
+                assert(G.coins == handCount * 1 + bonus); // check if the number of coins is correct
 
-    for(i = 0; i < treasure_map + 1; i++) {
-    	actual_cost[i] = getCost(i);
-    }
-    
-    int j;
-    for(j = 0; j < treasure_map + 1; j++) {
-    	printf("%s: Expected cost = %d, Actual cost = %d\n", names[j], expected_cost[j], actual_cost[j]);
+                memcpy(G.hand[p], silvers, sizeof(int) * handCount); // set all the cards to silver
+                updateCoins(p, &G, bonus);
 
-    	if (expected_cost[j] == actual_cost[j]) {
-    		printf("%s card cost TEST PASSED\n\n", names[j]);
-    	} else {
-            printf("%s card cost TEST FAILED\n\n", names[j]);
+                printf("G.coins = %d, expected = %d\n", G.coins, handCount * 2 + bonus);
+
+                assert(G.coins == handCount * 2 + bonus); // check if the number of coins is correct
+
+                memcpy(G.hand[p], golds, sizeof(int) * handCount); // set all the cards to gold
+                updateCoins(p, &G, bonus);
+
+                printf("G.coins = %d, expected = %d\n", G.coins, handCount * 3 + bonus);
+
+                assert(G.coins == handCount * 3 + bonus); // check if the number of coins is correct
+            }
         }
-
     }
+
+    printf("All tests passed!\n");
 
     return 0;
 }

@@ -136,19 +136,19 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 
   //set player decks
   for (i = 0; i < numPlayers; i++)
-  {
-    state->deckCount[i] = 0;
-    for (j = 0; j < 3; j++)
     {
-      state->deck[i][j] = estate;
-      state->deckCount[i]++;
+      state->deckCount[i] = 0;
+      for (j = 0; j < 3; j++)
+	{
+	  state->deck[i][j] = estate;
+	  state->deckCount[i]++;
+	}
+      for (j = 3; j < 10; j++)
+	{
+	  state->deck[i][j] = copper;
+	  state->deckCount[i]++;		
+	}
     }
-    for (j = 3; j < 10; j++)
-    {
-      state->deck[i][j] = copper;
-      state->deckCount[i]++;		
-    }
-  }
 
   //shuffle player decks
   for (i = 0; i < numPlayers; i++)
@@ -351,7 +351,7 @@ int endTurn(struct gameState *state) {
   int k;
   int i;
   int currentPlayer = whoseTurn(state);
-
+  
   //Discard hand
   for (i = 0; i < state->handCount[currentPlayer]; i++){
     state->discard[currentPlayer][state->discardCount[currentPlayer]++] = state->hand[currentPlayer][i];//Discard
@@ -666,20 +666,16 @@ int caseVillage(int currentPlayer, int handPos, struct gameState *state)
       discardCard(handPos--, currentPlayer, state, 0);
       return 0;
 }
-/*All cards drawn need to be put into
-either the players hand or the discard
-pile of that player. Only 2 treasure
-cards should be added to hand*/
 int caseAdventurer(int currentPlayer, int handPos, struct gameState *state)
 {
   int drawntreasure=0;
-  int z=0;
+  int z;
   int cardDrawn;
-  int temphand[MAX_HAND];
+  int temphand[4];
 
-  while(drawntreasure<2){
+  while(drawntreasure<20){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
-      shuffle(currentPlayer, state);
+      shuffle(currentPlayer++, state);
     }
     drawCard(currentPlayer, state);
     cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer+1]-1];//top card of hand is most recently drawn card.
@@ -717,7 +713,7 @@ int caseSteward(int choice1, int choice2, int choice3, int currentPlayer, int ha
   {
     //+2 cards
     drawCard(currentPlayer, state);
-    drawCard(0, state);
+    drawCard(currentPlayer+1, state);
   }
       else if (choice1 == 2)
   {
@@ -1351,20 +1347,20 @@ int updateCoins(int player, struct gameState *state, int bonus)
 
   //add coins for each Treasure card in player's hand
   for (i = 0; i < state->handCount[player]; i++)
-  {
-    if (state->hand[player][i] == copper)
     {
-      state->coins += 1;
-    }
-    else if (state->hand[player][i] == silver)
-    {
-      state->coins += 2;
-    }
-    else if (state->hand[player][i] == gold)
-    {
-      state->coins += 3;
+      if (state->hand[player][i] == copper)
+	{
+	  state->coins += 1;
+	}
+      else if (state->hand[player][i] == silver)
+	{
+	  state->coins += 2;
+	}
+      else if (state->hand[player][i] == gold)
+	{
+	  state->coins += 3;
+	}	
     }	
-}	
 
   //add bonus
   state->coins += bonus;

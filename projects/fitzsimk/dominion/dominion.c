@@ -36,7 +36,8 @@ int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
   return k;
 }
 
-int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct gameState *state) {
+int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
+		   struct gameState *state) {
 
   int i;
   int j;
@@ -199,7 +200,6 @@ int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed, struct 
   return 0;
 }
 
-/*              SHUFFLE                    */
 int shuffle(int player, struct gameState *state) {
  
 
@@ -578,6 +578,7 @@ int drawCard(int player, struct gameState *state)
     state->deckCount[player]--;
     state->handCount[player]++;//Increment hand count
   }
+
   return 0;
 }
 
@@ -1388,7 +1389,7 @@ int play_cutpurse(int currentPlayer,struct gameState *state, int handPos){
 	    {
 	      for (j = 0; j < state->handCount[i]; j++)
 		{
-		  if (state->hand[i][j] == 5)
+		  if (state->hand[i][j] == silver)
 		    {
 		      discardCard(j, i, state, 0);
 		      break;

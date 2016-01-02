@@ -89,15 +89,15 @@ void test_scoreFor(){
 	//reset again
 	memset(&G, 0, sizeof(struct gameState));
 	r = initializeGame(numPlayer, k, seed, &G);
-	//fill with 20 dead cards + 3 gardens, should be 3 points
+	//fill with 17 dead cards + 3 gardens, should be 3 points
 	int gardens_hand[MAX_HAND] = 	{copper, copper, copper, copper, gardens};
-	int gardens_discard[MAX_DECK] =	{silver, gold, silver, silver, gold, silver, gold, copper, copper, copper, gardens};
+	int gardens_discard[MAX_DECK] =	{silver, gold, silver, gold, copper, copper, copper, gardens};
 	int gardens_deck[MAX_DECK] =	{copper, copper, copper, copper, copper, copper, gardens};
 	// total value = 2 points
 	// insert into player 1 (0) hand and calculate score
 	// also insert counts into hand, discard, deck count
 	G.handCount[0] = 5;
-	G.discardCount[0] = 11;
+	G.discardCount[0] = 8;
 	G.deckCount[0] = 7;
 	// use memcopy to insert sample decks into gamestate
 	memcpy(G.hand[0], gardens_hand, sizeof(int)*MAX_HAND);

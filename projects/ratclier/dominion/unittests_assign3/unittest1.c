@@ -1,15 +1,3 @@
-//
-// *****************************************************************************
-// 
-// Author:    Erik Ratcliffe
-// Date:      October 25, 2015
-// Project:   Assignment 3 - Unit Tests
-// Filename:  unittest1.c
-// Class:     CS 362 (Fall 2015)
-//
-// *****************************************************************************
-//
-
 #include <stdio.h>
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -151,13 +139,13 @@ int testDiscardCard(int handPos, int currentPlayer, struct gameState *state, int
 
 int main(int argc, char *argv[])
 {
-    int numPlayers    = 2;    // default number of players
-    int randomSeed    = 100;  // random seed for the game
-    int handPos       = 3;    // card in play
-    int currentPlayer = 0;    // self explanatory
-    int trashFlag;            // says whether the card is being trashed or not
-    struct gameState *state;  // holds the new state of the game
+    int numPlayers = 2;
+    int handPos = 3;
+    int currentPlayer = 0;
     int kingdomCards[10] = {adventurer, gardens, embargo, village, minion, mine, cutpurse, sea_hag, tribute, smithy};
+    int randomSeed = 100;
+    int trashFlag;
+    struct gameState *state;
 
     // New game
     //
@@ -167,10 +155,11 @@ int main(int argc, char *argv[])
     printf("\n");
 
     // Discard a trashed card
-    //
     printf(">>> TESTING: discardCard(), trashed card...\n");
-    trashFlag = 1;   // trashed
+    trashFlag     = 1;   // trashed
     testDiscardCard(handPos, currentPlayer, state, trashFlag);
+
+    //printf("\n");
 
     // New game
     //
@@ -179,7 +168,7 @@ int main(int argc, char *argv[])
 
     // Discard a non-trashed card
     printf(">>> TESTING: discardCard(), non-trashed card...\n");
-    trashFlag = 0;   // not trashed
+    trashFlag     = 0;   // not trashed
     testDiscardCard(handPos, currentPlayer, state, trashFlag);
 
     return 0;

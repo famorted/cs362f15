@@ -1,6 +1,11 @@
 /* -----------------------------------------------------------------------
  * Unit Test for isGameOver()
  *
+ * Demonstration of how to write unit tests for dominion-base
+ * Include the following lines in your makefile:
+ *
+ * testUpdateCoins: testUpdateCoins.c dominion.o rngs.o
+ *      gcc -o testUpdateCoins -g  testUpdateCoins.c dominion.o rngs.o $(CFLAGS)
  * -----------------------------------------------------------------------
  */
 
@@ -10,6 +15,10 @@
 #include <stdio.h>
 #include <assert.h>
 #include "rngs.h"
+
+// set NOISY_TEST to 0 to remove printfs from output
+#define NOISY_TEST 1
+
 		
 int checkProvinces(struct gameState *state) {
 	int gameOverCheck = isGameOver(state);
@@ -119,6 +128,8 @@ int main() {
     		G.supplyCount[i] = 0;
     	}
     	checkSupplyCount(&G);
+
+    	printf("All tests passed!\n");
 
     	return 0;
 	}

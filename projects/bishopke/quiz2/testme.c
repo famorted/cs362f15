@@ -6,39 +6,13 @@
 char inputChar()
 {
     // TODO: rewrite this function
-    //return ' ';
-	switch(rand()%9){
-		case 0: return '['; break;
-		case 1: return '('; break;
-		case 2: return '{'; break;
-		case 3: return ' '; break;
-		case 4: return 'a'; break;
-		case 5: return 'x'; break;
-		case 6: return '}'; break;
-		case 7: return ')'; break;
-		case 8: return ']'; break;
-		default: return ' '; break;
-	}
+    return ' ';
 }
 
 char *inputString()
 {
-	int i = 0;
-	//make 5 char string
-	char *s = malloc(6*sizeof(char));
-
-	for(i = 0; i < 5; i++){
-		switch(rand()%4){
-			case 0: s[i] = 'r'; break;
-			case 1: s[i] = 'e'; break;
-			case 2: s[i] = 's'; break;
-			case 3: s[i] = 't'; break;
-			default: return ' '; break;
-		}
-	}
-	//add null terminator
-	s[6] = '\0';
-	return s;
+    // TODO: rewrite this function
+    return "";
 }
 
 void testme()

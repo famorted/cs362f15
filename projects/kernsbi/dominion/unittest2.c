@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1 
+#define NOISY_TEST 0
 
 int main(){
 	struct gameState G;
@@ -28,7 +28,7 @@ int main(){
 							mine,remodel, smithy, village, baron, great_hall, minion, steward, tribute, ambassador, cutpurse,
 							embargo, outpost, salvager, sea_hag, treasure_map};
 	printf("Testing fullDeckCount():\n");
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 1000; n++){
 		count = 0;
 		for(i = 0; i < sizeof(struct gameState); i++){//fill gameState with junk
 			((char*)&G)[i] = (rand() % (256));
@@ -67,8 +67,7 @@ int main(){
 		newCount = fullDeckCount(p, randomCardToPick, &post);
 		if(newCount != count){//check local count against count returned by fullDeckCount()
 			#if(NOISY_TEST == 1)
-			printf("Iteration #: %d	Test 1 failed\n", n);
-			printf("Expected count: %d	Actual count: %d\n", count, newCount);
+			printf("Test #:	%d failed\n", n);
 			#endif
 			errorCount++;
 		}
@@ -80,6 +79,7 @@ int main(){
 			errorCount++;
 		}
 		#if(NOISY_TEST == 1)
+		printf("%d:	Expected count: %d	Actual count: %d\n", n, count, newCount);
 		#endif
 	}
 	

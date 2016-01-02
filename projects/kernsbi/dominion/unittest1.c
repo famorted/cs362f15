@@ -2,7 +2,6 @@
 // Assignment 3
 // unittest1.c
 // Testing the scoreFor() function
-
 #include "dominion.h"
 #include "dominion_helpers.h"
 #include <string.h>
@@ -12,7 +11,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1
+#define NOISY_TEST 0
 
 int checkScoreFor(int player, struct gameState *post, int *preScore, int *postScore);
 
@@ -32,7 +31,7 @@ int main(){
 	srand(time(NULL));
 	
 	printf("Testing scoreFor():\n");
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 1000; n++){
 		for(i = 0; i < sizeof(struct gameState); i++){//fill gameState with junk
 			((char*)&G)[i] = (rand() % (256));
 		}
@@ -54,10 +53,10 @@ int main(){
 		}
 		checkResult = checkScoreFor(p, &G, &preScore, &postScore);
 		if(checkResult == -1){
-			errorFlag++;
 			#if(NOISY_TEST == 1)
-			printf("Failed on iteration %d	Test 1 failed.	Expected: %d	Result:  %d\n", n, preScore, postScore);
+			printf("Failed on test #%d\n", n);
 			#endif
+			errorFlag++;
 		}
 		else if(checkResult == -2){
 			#if(NOISY_TEST == 1)
@@ -66,6 +65,9 @@ int main(){
 			#endif
 			errorFlag++;
 		}
+		#if(NOISY_TEST == 1)
+		printf("%d:	Expected: %d	Result:  %d\n", n, preScore, postScore);
+		#endif
 	}
 	if(errorFlag == 0){
 		printf("All tests passed\n");

@@ -1,146 +1,199 @@
 #include "dominion.h"
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
 #include "unittestHelper.h"
-#include <stdlib.h>
-#include <limits.h>
 
-int main()
-{
-	int i;
-	int TEST_TIMES= 100;
-	struct gameState testerState;
-	srand(time(0));
+int i;
+  struct gameState copyState, afterCopy;
+  struct aChangeReturnVals aDiff= (aChangeReturnVals){-1,-1,-1};
 
-	printf("*****************************************************\n");
-	printf("*UNITTEST2 Suite \n");
-	printf("  (tests drawCard() with 100 semi-random state)\n");
-	printf("*****************************************************\n");
-	for(i=0; i<TEST_TIMES; i++)
-	{
-		createRandState(&testerState);
-		unittest2(&testerState);
-	}
-	
-	return 0;
-}
+  makeCopyState(state, &copyState);
+
+  endTurn(state);
+
+  makeCopyState(state, &afterCopy);
   
-//Tests drawCard()
-unittest2(struct gameState *state)
-{
-	int i, b, test[E_playedCardCount+1]= {0};
-	
-	int hand[1], //arrays that show how many players may have differences in those attributes after call
-		handCount[1],
-		deck[1],
-		deckCount[1],
-		discard[1],
-		discardCount[1];
-
-	int hLen,
-		hcLen,
-		deLen,
-		decLen,
-		diLen,
-		dicLen;
-
-	struct gameState copyState, afterCopy;
-	
-	
-	//snapshot of state BEFORE
-	copyState= *state;
-
-	drawCard(copyState.whoseTurn, state);
-
-	//snapshot of state AFTER
-	afterCopy= *state;
-
-	
-	//check if deck was empty before, if it was, the new deckCount should be same 
-	//as the old discardCount-1
-	if(copyState.deckCount[copyState.whoseTurn]== 0)
+  do
 	{
-		if(afterCopy.deckCount[afterCopy.whoseTurn]!= copyState.discardCount[copyState.whoseTurn]- 1)
-		{	
-			printf("Test deckCount when empty before: FAILED\n");
-			printf("deckCount Before: %d\n", copyState.deckCount[copyState.whoseTurn]);
-			printf("deckCount After: %d\n", afterCopy.deckCount[copyState.whoseTurn]);
-			printf("discardCount Before: %d\n\n", copyState.discardCount[copyState.whoseTurn]);
-		}
-	}
+		//compare game state before endTurn is called, to after the call
+		aDiff= aChange(afterCopy, copyState);
 
-	//if deck was not empty, then deckCount should decrease by 1
-	if(copyState.deckCount[copyState.whoseTurn]!= 0)
-	{
-		if(afterCopy.deckCount[afterCopy.whoseTurn]!= copyState.deckCount[copyState.whoseTurn]- 1)
-		{	
-			printf("Test deckCount when not empty before: FAILED\n");
-			printf("deckCount Before: %d\n", copyState.deckCount[copyState.whoseTurn]);
-			printf("deckCount After: %d\n\n", afterCopy.deckCount[copyState.whoseTurn]);
-		}
-	}
-
-	//check if deck was empty before, if it was, the new discardCount should be 0.
-	if(copyState.deckCount[copyState.whoseTurn]== 0)
-	{
-		if(afterCopy.discardCount[copyState.whoseTurn]!= 0)
-		{	
-			printf("Test discardCount when deck was empty before: FAILED\n");
-			printf("deckCount Before: %d\n", copyState.deckCount[copyState.whoseTurn]);
-			printf("deckCount After: %d\n", afterCopy.deckCount[copyState.whoseTurn]);
-			printf("discardCount Before: %d\n", copyState.discardCount[copyState.whoseTurn]);
-			printf("discardCount After: %d\n\n", afterCopy.discardCount[copyState.whoseTurn]);
-		}
-	}
-
-	//handCount should increase by 1
-	if(afterCopy.handCount[afterCopy.whoseTurn]!= copyState.handCount[copyState.whoseTurn]+ 1)
-	{	
-		printf("Test handCount: FAILED\n");
-		printf("handCount Before: %d\n", copyState.handCount[copyState.whoseTurn]);
-		printf("handCount After: %d\n\n", afterCopy.handCount[afterCopy.whoseTurn]);		
-	}
-
-	//if deck was not empty
-	//new hands last card should be the one drawn from the old decks last position
-	if(copyState.deckCount[copyState.whoseTurn]!= 0)
-	{
-		if((copyState.whoseTurn < MAX_PLAYERS)
-		&&(copyState.deckCount[copyState.whoseTurn] < MAX_DECK)
-		&&(copyState.handCount[copyState.whoseTurn] < MAX_HAND))		
+		switch(aDiff.stateChange)
 		{
-			if(afterCopy.hand[copyState.whoseTurn][copyState.handCount[copyState.whoseTurn]] 
-				!= copyState.deck[copyState.whoseTurn][copyState.deckCount[copyState.whoseTurn]-1])
-			{	
-				printf("Test handCount: FAILED\n");
-				printf("handCount Before: %d\n", copyState.handCount[copyState.whoseTurn]);
-				printf("handCount After: %d\n\n", afterCopy.handCount[copyState.whoseTurn]);		
-			}
-		}
-	}
-	
-	//players who are expected to possibly change in the following attributes
-	hand[0]= copyState.whoseTurn;		
-	hLen= 1;
+			case E_numPlayers:  
+				printf("Error: numPlayers changed.\n"); 
+				printf("numPlayers Before: %d\n", copyState.numPlayers);
+				printf("numPlayers After: %d\n\n", afterCopy.numPlayers);
+				//The line below removes this cases difference in order to allow
+				//the change finding function to find the next difference in states
+				afterCopy.numPlayers= copyState.numPlayers;
+				break;
+
+			case E_supplyCount: 
+				printf("Error: supplyCount changed.\n"); 
+				printf("supplyCount of card#%d Before: %d\n", r.indexI, copyState.supplyCount[r.indexI]);
+				printf("supplyCount of card#%d After: %d\n\n", r.indexI, afterCopy.supplyCount[r.indexI]);
+				afterCopy.supplyCount[r.indexI]= copyState.supplyCount[r.indexI];
+				break;
+			case E_embargoTokens: 
+				printf("Error: embargoTokens changed.\n"); 
+				printf("embargoTokens of card#%d Before: %d\n", r.indexI, copyState.embargoTokens[r.indexI]);
+				printf("embargoTokens of card#%d After: %d\n\n", r.indexI, afterCopy.embargoTokens[r.indexI]);
+				afterCopy.embargoTokens[r.indexI]= copyState.embargoTokens[r.indexI];
+				break;
+
+			case E_outpostPlayed: 
 				
-	handCount[0]= copyState.whoseTurn;	
-	hcLen= 1;
+				afterCopy.outpostPlayed= copyState.outpostPlayed;
+				break;
 
-	discard[0]= copyState.whoseTurn;	
-	diLen= 1;
+			case E_outpostTurn: 
+				printf("Error: outpostTurn changed.\n"); 
+				printf("outpostTurn Before: %d\n", copyState.outpostTurn);
+				printf("outpostTurn After: %d\n\n", afterCopy.outpostTurn);
+				afterCopy.outpostTurn= copyState.outpostTurn;
+				break;
 
-	discardCount[0]= copyState.whoseTurn;	
-	dicLen= 1;
+			case E_whoseTurn: 
+				
+				afterCopy.whoseTurn= copyState.whoseTurn;
+				break;
 
-	deck[0]= copyState.whoseTurn;
-	deLen= 1;
-	
-	deckCount[0]= copyState.whoseTurn;
-	decLen= 1;
+			case E_phase:
+				
+				afterCopy.phase= copyState.phase;
+				break;
 
-	//Find all changes to gamestate and print errors if changes were not expected
-	printBadDiffs(&copyState, &afterCopy, test, hand, hLen, handCount, hcLen, discard, diLen, discardCount, dicLen, deck, deLen, deckCount, decLen);	
+			case E_numActions: 
+				
+				afterCopy.numActions= copyState.numActions;
+				break;
 
-	return 0;
+			case E_coins: 
+				
+				afterCopy.coins= copyState.coins;
+				break;
+
+			case E_numBuys: 
+				
+				afterCopy.numBuys= copyState.numBuys;
+				break;
+
+			case E_hand: 
+				printf("Error: hand changed.\n"); 
+				printf("Player#%d hand position#%d Before: %d\n", r.indexI, r.indexJ, copyState.hand[r.indexI][r.indexJ]);
+				printf("Player#%d hand position#%d After: %d\n\n", r.indexI, r.indexJ, afterCopy.hand[r.indexI][r.indexJ]);
+				afterCopy.hand[r.indexI][r.indexJ]= copyState.hand[r.indexI][r.indexJ];
+				break;
+
+			case E_handCount: 
+				
+				afterCopy.handCount= copyState.handCount;
+				break;
+
+			case E_deck: 
+				printf("Error: deck changed.\n"); 
+				printf("Player#%d deck position#%d Before: %d\n", r.indexI, r.indexJ, copyState.deck[r.indexI][r.indexJ]);
+				printf("Player#%d deck position#%d After: %d\n\n", r.indexI, r.indexJ, afterCopy.deck[r.indexI][r.indexJ]);
+				afterCopy.deck[r.indexI][r.indexJ]= copyState.deck[r.indexI][r.indexJ];
+				break;
+
+			case E_deckCount:
+				printf("Error: deckCount changed.\n"); 
+				printf("Player#%d deckCount Before: %d\n", r.indexI, copyState.deckCount[r.indexI]);
+				printf("Player#%d deckCount After: %d\n\n", r.indexI, afterCopy.deckCount[r.indexI]);
+				afterCopy.deckCount[r.indexI]= copyState.deckCount[r.indexI];
+				break;
+
+			case E_discard: 
+				printf("Error: discard changed.\n"); 
+				printf("Player#%d discard position#%d Before: %d\n", r.indexI, r.indexJ, copyState.deck[r.indexI][r.indexJ]));
+				printf("Player#%d discard position#%d After: %d\n\n", r.indexI, r.indexJ, afterCopy.deck[r.indexI][r.indexJ]));
+				afterCopy.discard[r.indexI][r.indexJ]= copyState.discard[r.indexI][r.indexJ];
+				break;
+
+			case E_discardCount: 
+				
+				afterCopy.discardCount= copyState.discardCount;
+				break;
+
+			case E_playedCards: 
+				printf("Error: playedCards changed.\n"); 
+				printf("playedCard#%d Before: %d\n", r.indexI, copyState.playedCards[r.indexI]);
+				printf("playedCard#%d After: %d\n\n", r.indexI, afterCopy.playedCards[r.indexI]);
+				afterCopy.playedCards[r.indexI]= copyState.playedCards[r.indexI];
+				break;
+
+			case E_playedCardCount: 
+				afterCopy.playedCardCount= copyState.playedCardCount;
+				break;
+		}		
+	}
+	while(r.stateChange > 0);
+
+
+
+  
+check if deck is empty, if it is, new deckCount should be same as discardCount
+discardCount should go to 0
+shuffle should change the order from the discard array
+deckCount
+handCount
+check everyone elses hands
+
+int drawCard(int player, struct gameState *state)
+{	int count;
+  int deckCounter;
+  if (state->deckCount[player] <= 0){//Deck is empty
+    
+    //Step 1 Shuffle the discard pile back into a deck
+    int i;
+    //Move discard to deck
+    for (i = 0; i < state->discardCount[player];i++){
+      state->deck[player][i] = state->discard[player][i];
+      state->discard[player][i] = -1;
+    }
+
+    state->deckCount[player] = state->discardCount[player];
+    state->discardCount[player] = 0;//Reset discard
+
+    //Shufffle the deck
+    shuffle(player, state);//Shuffle the deck up and make it so that we can draw
+   
+    if (DEBUG){//Debug statements
+      printf("Deck count now: %d\n", state->deckCount[player]);
+    }
+    
+    state->discardCount[player] = 0;
+
+    //Step 2 Draw Card
+    count = state->handCount[player];//Get current player's hand count
+    
+    if (DEBUG){//Debug statements
+      printf("Current hand count: %d\n", count);
+    }
+    
+    deckCounter = state->deckCount[player];//Create a holder for the deck count
+
+    if (deckCounter == 0)
+      return -1;
+
+    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to hand
+    state->deckCount[player]--;
+    state->handCount[player]++;//Increment hand count
+  }
+
+  else{
+    int count = state->handCount[player];//Get current hand count for player
+    int deckCounter;
+    if (DEBUG){//Debug statements
+      printf("Current hand count: %d\n", count);
+    }
+
+    deckCounter = state->deckCount[player];//Create holder for the deck count
+    state->hand[player][count] = state->deck[player][deckCounter - 1];//Add card to the hand
+    state->deckCount[player]--;
+    state->handCount[player]++;//Increment hand count
+  }
+
+  return 0;
 }
-

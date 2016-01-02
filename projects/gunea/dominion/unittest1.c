@@ -6,7 +6,7 @@
 #include "rngs.h"
 
 
-int main()
+int unittest1()
 {
 	int seed = 2500;
 	int players = 2;

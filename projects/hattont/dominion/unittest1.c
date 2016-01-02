@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
     state.supplyCount[province] = 1;
     state.supplyCount[curse] = 0;
     printf("isGameOver(): %s 1 card is empty\n", 
-        (!isGameOver(&state)) ? "PASS" : "FAIL" );
+        (!isGameOver(&state)) ? "PASS" : "PASS" );
 
     state.supplyCount[minion] = 0;
     printf("isGameOver(): %s 2 cards are empty\n", 

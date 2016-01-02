@@ -12,7 +12,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1
+#define NOISY_TEST 0
 
 int main(){
 	int OGCoins;
@@ -35,7 +35,7 @@ int main(){
 	struct gameState G;
 	
 	printf("Testing updateCoins():\n");
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 1000; n++){
 		copperCoins = 0;
 		silverCoins = 0;
 		goldCoins = 0;
@@ -91,54 +91,54 @@ int main(){
 		}
 		if(G.coins != post.coins){//Test 1: Coins in both states should be even
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d 	Test 1 failed.\n", n);
-			printf("Expected coin total: %d	Actual coin total: %d\n", G.coins, post.coins);
+			printf("Test #%d Failed.\n", n);
+			printf("GameState coin counts are not equal.\n");
 			#endif
 			errorCount++;
 		}
 		if(post.coins != OGCoins){//Test 2: post.coins should equal local coin variable OGCoins
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d	Test 2 failed.\n", n);
+			printf("Test #%d Failed.\n", n);
 			printf("Coins after updateCoins() does not equal local coin holder variable.\n");
 			#endif
 			errorCount++;
 		}
 		if(copperCoins != postCopperCoins){//coins before and after function should be equal
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d	Test 3 failed.\n", n);
-			printf("Expected copper coins: %d	Actual copper coins: %d\n", copperCoins, postCopperCoins);
+			printf("Test #%d Failed.\n", n);
+			printf("Incorrect amount of copper coins.\n");
 			#endif
 			errorCount++;
 		}
 		if(silverCoins != postSilverCoins){
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d	Test 4 failed.\n", n);
-			printf("Expected silver coins: %d	Actual silver coins: %d\n", silverCoins, postSilverCoins);
+			printf("Test #%d Failed.\n", n);
+			printf("Incorrect amound of silver coins.\n");
 			#endif
 			errorCount++;
 		}
 		if(goldCoins != postGoldCoins){
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d	Test 5 failed.\n", n);
-			printf("Expected gold coins: %d	Actual gold coins: %d\n", goldCoins, postGoldCoins);
+			printf("Test #%d Failed.\n", n);
+			printf("Incorrect amount of gold coins.\n");
 			#endif
 			errorCount++;
 		}
 		if(memcmp(&G, &post, sizeof(struct gameState)) != 0){//Test 3: GameStates should be identical
 			#if(NOISY_TEST == 1)
-			printf("Iteration #%d	Test 6 failed.\n", n);
+			printf("Test #%d Failed.\n", n);
 			printf("Memcmp failed\n");
 			#endif
 			errorCount++;
 		}
-/*		#if(NOISY_TEST == 1)
+		#if(NOISY_TEST == 1)
 		printf("Expected value of coins: %d	Actual value of coins: %d\n", G.coins, post.coins);
 		printf("Expected: %d Copper coins	Actual: %d Copper coins\n", copperCoins, postCopperCoins);
 		printf("Expected: %d Silver coins	Actual: %d Silver coins\n", silverCoins, postSilverCoins);
 		printf("Expected: %d Gold coins		Actual: %d Gold coins\n", goldCoins, postGoldCoins);
 		printf("Bonus: %d\n", bonus);
 		printf("\n");
-		#endif*/
+		#endif
 	}
 	if(errorCount == 0){
 		printf("All tests passed\n");

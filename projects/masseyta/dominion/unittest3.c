@@ -157,11 +157,11 @@ int main(){
     // test for changes in money supply that shouldn't have been activated, will test for money being given to players
     printf("\nTest 7: Test supply counts for treasure that should have been distributed: \n");
     if(g.supplyCount[copper] != testState.supplyCount[copper])
-      printf("FAILED. Copper Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[copper], testState.supplyCount[copper]);
+      printf("FAILED. Estate Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[copper], testState.supplyCount[copper]);
     if(g.supplyCount[silver] != testState.supplyCount[silver])
-      printf("FAILED. Silver Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[silver], testState.supplyCount[silver]);
+      printf("FAILED. Duchy Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[silver], testState.supplyCount[silver]);
     if(g.supplyCount[gold] != testState.supplyCount[gold])
-      printf("FAILED. Gold Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[gold], testState.supplyCount[gold]);
+      printf("FAILED. Duchy Count Mismatch. Expected: %d  Received: %d\n", g.supplyCount[gold], testState.supplyCount[gold]);
     else
       printf("Passed. Supply counts for treasure cards are the same\n");
   }

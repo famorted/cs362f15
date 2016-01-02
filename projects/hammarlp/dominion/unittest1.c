@@ -5,9 +5,8 @@
 #include <assert.h>
 #include "rngs.h"
 
-int testKingdomCards(){	
-
-	int* k = kingdomCards(1,2,3,4,5,6,7,8,9,10);
+void testKingdomCards(){
+	int k[10] = kingdomCards(1,2,3,4,5,6,7,8,9,10);
 
 	assert(k[0] == 1);
 	assert(k[1] == 2);
@@ -20,17 +19,15 @@ int testKingdomCards(){
 	assert(k[8] == 9);
 	assert(k[9] == 10);
 
-	return 0;
 
 }
 
 int main(){
-	printf("unittest1 - Testing kingdomCards\n");
+	printf("Testing kingdomCards\n");
 
 	testKingdomCards();
 
-	printf("Test passed. Kingdom cards created correctly\n");
-	
+	printf("kingdom test passed\n");
 
 	return 0;
 }

@@ -811,7 +811,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case smithy:
-	  smithyCard(currentPlayer, state, handPos); 
+	  smithyCard(i, currentPlayer, state, handPos); 
       return 0;
 		
     case village:
@@ -1286,7 +1286,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
 }
 
 //Refactored code
-int adventurerCard (int drawntreasure, struct gameState* state, int currentPlayer, int cardDrawn, int temphand[], int z) {
+void adventurerCard (int drawntreasure, struct gameState* state, int currentPlayer, int cardDrawn, int temphand[], int z) {
       while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <=1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
@@ -1305,12 +1305,11 @@ int adventurerCard (int drawntreasure, struct gameState* state, int currentPlaye
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 	z=z-1;
       }
-	return 0;
+	return;
 }
 
-int smithyCard(int currentPlayer, struct gameState* state, int handPos) {
+void smithyCard(int i, int currentPlayer, struct gameState* state, int handPos) {
       //+3 Cards
-      int i;
       for (i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
@@ -1318,10 +1317,10 @@ int smithyCard(int currentPlayer, struct gameState* state, int handPos) {
 			
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 1);
-	return 0;
+	return;
 }
 
-int villageCard(int currentPlayer, struct gameState* state, int handPos) {
+void villageCard(int currentPlayer, struct gameState* state, int handPos) {
 		//+1 Card
 		drawCard(currentPlayer, state);
 		
@@ -1330,10 +1329,10 @@ int villageCard(int currentPlayer, struct gameState* state, int handPos) {
 		
 		//discard played card from hand
 		discardCard(handPos, currentPlayer, state, 1);
-	return 0;
+	return;
 }
 
-int great_hallCard(int currentPlayer, struct gameState* state, int handPos) {
+void great_hallCard(int currentPlayer, struct gameState* state, int handPos) {
 		//+1 Card
 		drawCard(currentPlayer, state);
 		drawCard(currentPlayer, state);
@@ -1343,16 +1342,16 @@ int great_hallCard(int currentPlayer, struct gameState* state, int handPos) {
 		
 		//discard card from hand
 		discardCard(handPos, currentPlayer, state, 0);
-	return 0;
+	return;
 }
 
-int outpostCard(struct gameState* state, int handPos, int currentPlayer) {
+void outpostCard(struct gameState* state, int handPos, int currentPlayer) {
 		//set outpost flag
 		state->outpostPlayed++;
 		
 		//discard card
 		discardCard(handPos, currentPlayer, state, 0);
-	return 0;
+	return;
 }
 //end of dominion.c
 

@@ -8,7 +8,7 @@ For the council function I made it so each time through the for loop 2 cards are
 
 For gardens I made no changes.
 
-For the smithy card I changed the incrimenter on i from a postfix to a prefix so now only 2 cards are drawn instead of 3 while also changing the loop counter to 2 rather then 3
+For the smithy card I changed the incrimenter on i from a postfix to a prefix so now only 2 cards are drawn instead of 3.
 
 FOr the village card I changed the state->numActions = state->numActions + 2 to state->numActions =2; so now 
 instead of increasing actions by 2 it sets total actions to 2.

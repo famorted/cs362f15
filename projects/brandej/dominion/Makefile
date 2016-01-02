@@ -56,7 +56,7 @@ cardtest3: cardtest3.c dominion.o rngs.o interface.o
 	gcc -o cardtest3 cardtest3.c -g dominion.o rngs.o $(CFLAGS)
 
 unittestresults.out: cardtest1.c cardtest2.c cardtest3 unittest1.c unittest2.c unittest3.c unittest4.c dominion.c rngs.o interface.o
-	echo "Test Results:" > unittestresults.out
+	echo "Result for running unit tests:" > unittestresults.out
 	
 	echo "unittest1.c results" >> unittestresults.out
 	gcc -o unittest1 unittest1.c -g dominion.c rngs.o interface.o $(CFLAGS)
@@ -94,7 +94,9 @@ unittestresults.out: cardtest1.c cardtest2.c cardtest3 unittest1.c unittest2.c u
 	gcov -b dominion.c >> unittestresults.out
 
 clean:
-	rm *.o playdom.exe playdom test.exe test player player.exe testInit testInit.exe unittest1.exe unittest1 unittest2.exe unittest2 unittest3.exe unittest3 unittest4.exe unittest4 cardtest1.exe cardtest1 cardtest2.exe cardtest2 cardtest3.exe cardtest3 *.gcov *.gcda *.gcno *.so
+	rm *.o playdom.exe playdom test.exe test player player.exe testInit testInit.exe unittest1.exe unittest1 
+	unittest2.exe unittest2 unittest3.exe unittest3 unittest4.exe unittest4 cardtest1.exe cardtest1 cardtest2.exe 
+	cardtest2 cardtest3.exe cardtest3*.gcov *.gcda *.gcno *.so
 	
 	
 	

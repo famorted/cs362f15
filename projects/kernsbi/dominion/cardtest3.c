@@ -11,7 +11,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1
+#define NOISY_TEST 0
 
 int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n);
 
@@ -33,7 +33,7 @@ int main(){
 	int k[10] = {adventurer, council_room, feast, gardens, mine
                , remodel, smithy, village, baron, great_hall};
 	printf("Testing Village Card\n");
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 10000; n++){
 		p = (rand() % (MAX_PLAYERS-1));
 		initializeGame(p+1, k, 1000, &G);
 		for(t = 0; t < sizeof(struct gameState); t++){//fill gameState with junk
@@ -88,21 +88,21 @@ int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n){
 	cardEffect(village, -1, -1, -1, &post, handPos, &bonus);
 	if(pre->handCount[currentPlayer] != post.handCount[currentPlayer]){//gain one card but should lose the village card 
 		#if(NOISY_TEST == 1)
-		printf("Iteration #:%d	Test 1 failed\n", n);
+		printf("Test #:%d failed\n", n);
 		printf("Expected: cardCount = %d	Actual: cardCount = %d\n", pre->handCount[currentPlayer], post.handCount[currentPlayer]);
 		#endif
 		funErrors++;
 	}
 	if(pre->numActions + 2 != post.numActions){//Should have 2 more actions than original
 		#if(NOISY_TEST == 1)
-		printf("Iteration #:%d	Test 2 failed\n", n);
+		printf("Test #:%d failed\n", n);
 		printf("Expected: numActions = %d	Actual: numActionst = %d\n", pre->numActions + 2, post.numActions);
 		#endif
 		funErrors++;
 	}
 	if(pre->discardCount[currentPlayer] + 1 != post.discardCount[currentPlayer]){//discardCount should be incremented
 		#if(NOISY_TEST == 1)
-		printf("Iteration #: %d	Test 3 failed\n", n);
+		printf("Test #: %d failed\n", n);
 		printf("Expected: discardCount = %d	Actual: discardCount = %d\n", pre->discardCount[currentPlayer] + 1, post.discardCount[currentPlayer]);
 		#endif
 		funErrors++;
@@ -111,7 +111,7 @@ int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n){
 		if(pre->handCount[t] != post.handCount[t]){
 			if(t != currentPlayer){//if current player then it's probably different
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d	Test 4 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Player %d handCount = %d	Actual: Player %d handCount = %d\n", t, pre->handCount[t], t, post.handCount[t]);
 				#endif
 				funErrors++;
@@ -120,7 +120,7 @@ int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n){
 		if(pre->discardCount[t] != post.discardCount[t]){
 			if(t != currentPlayer){
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d	Test 5 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Player %d discardCount = %d	Actual: Player %d discardCount = %d\n", t, pre->discardCount[t], t, post.discardCount[t]);
 				#endif
 				funErrors++;
@@ -129,7 +129,7 @@ int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n){
 		if(pre->deckCount[t] != post.deckCount[t]){
 			if(t != currentPlayer){
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d	Test 6 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Player %d deckCount = %d	Actual: Player %d deckCount = %d\n", t, pre->deckCount[t], t, post.deckCount[t]);
 				#endif
 				funErrors++;
@@ -144,7 +144,7 @@ int checkVillage(struct gameState *pre, int currentPlayer, int handPos, int n){
 		if(1 != postCount){
 			if(t != currentPlayer){
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d	Test 7 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Player %d treasure_map = 1	Actual: Player %d treasure_map = %d\n", t, t, postCount);
 				#endif
 				funErrors++;

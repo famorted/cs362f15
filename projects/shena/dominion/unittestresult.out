@@ -1,46 +1,20 @@
-Results from unit tests:
-======================== unittest1.c
 
 
 isGameOver() FUNCTION TEST
 
 FUNCTION TEST RESULT... PASS
 
-File 'dominion.c'
-Lines executed:16.72% of 586
-Branches executed:17.75% of 417
-Taken at least once:14.39% of 417
-Calls executed:7.14% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== unittest2.c
 
 
 supplyCount()FUNCTION TEST
 
 FUNCTION TEST RESULT... PASSED
 
-File 'dominion.c'
-Lines executed:15.70% of 586
-Branches executed:15.83% of 417
-Taken at least once:12.95% of 417
-Calls executed:7.14% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== unittest3.c
 shuffle() FUNCTION TEST
 
 55.000000% shuffled.
 FUNCTION TEST RESULT... PASSED
 
-File 'dominion.c'
-Lines executed:15.70% of 586
-Branches executed:16.31% of 417
-Taken at least once:13.19% of 417
-Calls executed:7.14% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== unittest4.c
 newGame() FUNCTION TEST
 
 Verifying numPlayers...
@@ -64,125 +38,126 @@ Verifying playedCardCount...
 
 FUNCTION TEST RESULTS... PASSED.
 
-File 'dominion.c'
-Lines executed:0.51% of 586
-Branches executed:0.00% of 417
-Taken at least once:0.00% of 417
-Calls executed:0.00% of 98
-dominion.c:creating 'dominion.c.gcov'
 
-======================== cardtest1.c
+
+Village Card Test 
+
+Creating new gameState... 
+gameState created
+
+Initializing Game...
+Game initialized
+
+Checking if card count correctly increased... Success!
+Checking return value... Success!
+
+
+Smithy Card Test Successful!
+
+
+
+isGameOver() FUNCTION TEST
+
+FUNCTION TEST RESULT... PASS
+
+
+
+supplyCount()FUNCTION TEST
+
+FUNCTION TEST RESULT... PASSED
+
+shuffle() FUNCTION TEST
+
+55.000000% shuffled.
+FUNCTION TEST RESULT... PASSED
+
+newGame() FUNCTION TEST
+
+Verifying numPlayers...
+Verifying supplyCount...
+Verifying embargoTokens...
+Verifying outpostPlayed...
+Verifying outpostTurn...
+Verifying whoseTurn...
+Verifying phase...
+Verifying numActions...
+Verifying coins...
+Verifying numBuys...
+Verifying hand...
+Verifying handCount...
+Verifying deck...
+Verifying deckCount...
+Verifying discard...
+Veriying discardCount...
+Verifying playedCards...
+Verifying playedCardCount...
+
+FUNCTION TEST RESULTS... PASSED.
+
+
+
+Village Card Test 
+
+Creating new gameState... 
+gameState created
+
+Initializing Game...
+Game initialized
+
+Checking if card count correctly increased... Success!
+Checking return value... Success!
+
+
+Smithy Card Test Successful!
+
+
+
+isGameOver() FUNCTION TEST
+
+FUNCTION TEST RESULT... PASS
+
+
+
+supplyCount()FUNCTION TEST
+
+FUNCTION TEST RESULT... PASSED
+
+shuffle() FUNCTION TEST
+
+55.000000% shuffled.
+FUNCTION TEST RESULT... PASSED
+
+newGame() FUNCTION TEST
+
+Verifying numPlayers...
+Verifying supplyCount...
+Verifying embargoTokens...
+Verifying outpostPlayed...
+Verifying outpostTurn...
+Verifying whoseTurn...
+Verifying phase...
+Verifying numActions...
+Verifying coins...
+Verifying numBuys...
+Verifying hand...
+Verifying handCount...
+Verifying deck...
+Verifying deckCount...
+Verifying discard...
+Veriying discardCount...
+Verifying playedCards...
+Verifying playedCardCount...
+
+FUNCTION TEST RESULTS... PASSED.
+
 
 
 Smithy Card Test 
 
 Creating new gameState... 
-gameState created... Pass!Initializing Game...
-outpostPlayed == 0... Pass!
-s->phase == 0... Pass!
-numActions == 1... Pass!
-numBuys == 1... Pass!
-playedCardCount == 0... Pass!
-numBuys == 0... Pass!
-s->handCount[s->whoseTurn] == numCards... Pass!
-
-Game initialized
-
-Checking if card count correctly increased... Failed!
-Checking return value... Success!
-
-
-Smithy Card Test Completed
-
-File 'dominion.c'
-Lines executed:20.82% of 586
-Branches executed:23.26% of 417
-Taken at least once:14.63% of 417
-Calls executed:12.24% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== cardtest2.c
-
-
-Adventurer Card Test
-
-Player 1 handCount is correct... Success!
-Player 1 properly discards card... Failed!
-Player 1 deck resized... Failed!
-Player 2 cards unaffected... Success!
-
-Adventurer Card Test Completed!
-
-File 'dominion.c'
-Lines executed:7.34% of 586
-Branches executed:11.75% of 417
-Taken at least once:4.56% of 417
-Calls executed:6.12% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== cardtest3.c
-
-
-Village Card Test 
-
-Creating new gameState... 
 gameState created
 
 Initializing Game...
-outpostPlayed == 0... Pass!
-s->phase == 0... Pass!
-numActions == 1... Pass!
-numBuys == 1... Pass!
-playedCardCount == 0... Pass!
-numBuys == 0... Pass!
-s->handCount[s->whoseTurn] == numCards... Pass!
-
 Game initialized
 
-Checking if card count correctly decreased... Success!
-Checking return value... Success!
-Checking if numActions increased... Failed!
-
-
-Village Card Test Completed!
-
-File 'dominion.c'
-Lines executed:20.82% of 586
-Branches executed:22.78% of 417
-Taken at least once:14.15% of 417
-Calls executed:12.24% of 98
-dominion.c:creating 'dominion.c.gcov'
-
-======================== cardtest4.c
-
-
-Village Card Test 
-
-Creating new gameState... 
-gameState created
-
-Initializing Game...
-outpostPlayed == 0... Pass!
-s->phase == 0... Pass!
-numActions == 1... Pass!
-numBuys == 1... Pass!
-playedCardCount == 0... Pass!
-numBuys == 0... Pass!
-s->handCount[s->whoseTurn] == numCards... Pass!
-
-Game initialized
-
-Checking if card count correctly adjusted... Failed!
-Checking return value... Success!
-Checking if numActions increased... Success!
-
-
-Great Hall Card Test Completed!
-
-File 'dominion.c'
-Lines executed:20.82% of 586
-Branches executed:22.78% of 417
-Taken at least once:14.15% of 417
-Calls executed:12.24% of 98
-dominion.c:creating 'dominion.c.gcov'
-
+Checking if card count correctly increased...

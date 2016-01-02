@@ -58,6 +58,3 @@ Notes:  Documentation of refactored cards in dominion.c as well as explanation o
 *	explanation:
 *		instead of increasing number of actions by 1, the great_hall card decreases actions by 1
 **************************************************************/
-
-
-/* As of 10/25/15: All bugs remain as listed above */

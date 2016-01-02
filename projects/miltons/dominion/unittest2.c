@@ -59,19 +59,21 @@ int main(int argc, char *argv[])
             // test with varying bonus amounts (0 to 10 coins)
             for (bonus = 0; bonus <= maxBonus; bonus++)
             {
+                // reset coins to zero for each iteration
+                testState.coins = 0;
 
                 printf("Test player %d with %d treasure card(s) and %d bonus.\n", player, handCount, bonus);
 
                 // set the number of cards in hand
                 testState.handCount[player] = handCount;
 
-                // call function to run test with all copper coins
+                // call function to run test with copper coins
                 testCoins(&testState, coppers, handCount, player, bonus, 1);
 
-                // call function to run test with all silver coins
+                // call function to run test with silver coins
                 testCoins(&testState, silvers, handCount, player, bonus, 2);
 
-                // call function to run test with all gold coins
+                // call function to run test with gold coins
                 testCoins(&testState, golds, handCount, player, bonus, 3);
             }
         }
@@ -91,7 +93,7 @@ void testCoins(struct gameState* t, int coins[MAX_HAND], int handCount, int play
     updateCoins(player, t, bonus);
 
     // display results
-    printf("coins = %d, expected = %d\n", t->coins, handCount * multiplier + bonus);
+    printf("testState.coins = %d, expected = %d\n", t->coins, handCount * multiplier + bonus);
 
     // check if the number of coins is correct - use if / else statement instead of assert
     // in order to allow execution to continue despite failing tests

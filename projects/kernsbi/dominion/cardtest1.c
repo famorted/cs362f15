@@ -11,7 +11,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define NOISY_TEST 1
+#define NOISY_TEST 0
 
 int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n);
 
@@ -31,7 +31,7 @@ int main(){
 	printf("Testing Smithy Card\n");
 	int k[10] = {adventurer, council_room, feast, gardens, mine
                , remodel, smithy, village, baron, great_hall};
-	for(n = 0; n < 10; n++){
+	for(n = 0; n < 500; n++){
 		p = (rand() % (MAX_PLAYERS-1));//players between 0 and MAX_PLAYERS
 		initializeGame(p+1, k, 1000, &G);
 		for(t = 0; t < sizeof(struct gameState); t++){//fill gameState with junk
@@ -92,13 +92,13 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 
 	if(post.handCount[turn] != pre->handCount[turn] + 2){//hand count should be incremented 3 times and then decremented when smithy is discarded
 		#if(NOISY_TEST == 1)
-		printf("Iteration # %d Test 1 failed. Hand count was not incremented 3 times\nExpected: handCount = %d	Actual: handCount = %d\n\n", n, pre->handCount[turn]+2, post.handCount[turn]);
+		printf("Test # %d failed. Hand count was not incremented 3 times\nExpected: handCount = %d	Actual: handCount = %d\n\n", n, pre->handCount[turn]+2, post.handCount[turn]);
 		#endif
 		errors++;
 	}
 	if(post.deckCount[turn] != pre->deckCount[turn] - 3 && pre->deckCount[turn] > 3){//deck count should be 3 less than pre unless deck had less than 3 to begin with
 		#if(NOISY_TEST == 1)
-		printf("Iteration # %d Test 2 failed. Deck count was not decremented 3 times\nExpected: deckCount = %d	Actual: deckCount = %d\n\n", n, pre->deckCount[turn]-3, post.deckCount[turn]);
+		printf("Test # %d failed. Deck count was not decremented 3 times\nExpected: deckCount = %d	Actual: deckCount = %d\n\n", n, pre->deckCount[turn]-3, post.deckCount[turn]);
 		#endif
 		errors++;
 	}
@@ -123,7 +123,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 
 		if(foundIt < 1 && post.hand[turn][post.handCount[turn] - i-1] != 13){//card was not found and last card in hand hasn't changed
 			#if(NOISY_TEST == 1)
-			printf("Iteration # %d Test 3 failed. Card received was not in deck\n\n", n);
+			printf("Test # %d failed. Card received was not in deck\n\n", n);
 			#endif
 			errors++;
 		}
@@ -132,7 +132,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 		if(post.handCount[i] != pre->handCount[i]){
 			if(i != turn){
 				#if(NOISY_TEST == 1)
-				printf("Iteration # %d Test 4 failed. Other players hand counts were changed\nExpected: Player %d handCount = %d	Actual: Player %d handCount = %d\n\n", n, i, pre->handCount[i], i, post.handCount[i]);
+				printf("Test # %d failed. Other players hand counts were changed\nExpected: Player %d handCount = %d	Actual: Player %d handCount = %d\n\n", n, i, pre->handCount[i], i, post.handCount[i]);
 				#endif
 				errors++;
 			}
@@ -142,7 +142,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 		if(post.discardCount[i] != pre->discardCount[i]){
 			if(i != turn){
 				#if(NOISY_TEST == 1)
-				printf("Iteration # %d Test 5 failed. Other players discard counts were changed\nExpected: Player %d discardCount = %d	Actual: Player %d discardCount = %d\n\n", n, i, pre->discardCount[i], i, post.discardCount[i]);
+				printf("Test # %d failed. Other players discard counts were changed\nExpected: Player %d discardCount = %d	Actual: Player %d discardCount = %d\n\n", n, i, pre->discardCount[i], i, post.discardCount[i]);
 				#endif
 				errors++;
 			}
@@ -152,7 +152,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 		if(post.deckCount[i] != pre->deckCount[i]){
 			if(i != turn){
 				#if(NOISY_TEST == 1)
-				printf("Iteration # %d Test 6 failed. Other players deck counts were changed\nExpected: Player %d deckCount = %d	Acutal: Player %d deckCount = %d\n\n", n, i, pre->deckCount[i], i, post.deckCount[i]);
+				printf("Test # %d failed. Other players deck counts were changed\nExpected: Player %d deckCount = %d	Acutal: Player %d deckCount = %d\n\n", n, i, pre->deckCount[i], i, post.deckCount[i]);
 				#endif
 				errors++;
 			}
@@ -162,7 +162,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 		if(post.hand[i][post.handCount[i]-((post.handCount[i]-1) / 2)] != baron){//check for card manually put in hand
 			if(i != turn){
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d Test 7 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Hand of unused player to be the same	Actual: Hand of unused player is not the same\n");
 				#endif
 				errors++;
@@ -179,7 +179,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 		if(1 != postCount){
 			if(i != turn){
 				#if(NOISY_TEST == 1)
-				printf("Iteration #: %d Test 8 failed\n", n);
+				printf("Test #: %d failed\n", n);
 				printf("Expected: Player %d treasure_map = 1	Actual: Player %d treasure_map = %d\n", i, i, postCount);
 				#endif
 				errors++;
@@ -188,7 +188,7 @@ int checkSmithy(int p, struct gameState *pre, int turn, int handPos, int n){
 	}
 	if(post.playedCardCount != pre->playedCardCount + 1){
 		#if(NOISY_TEST == 1)
-		printf("Iteration # %d Test 9 failed. Card was not added to played card count\nExpected: playedCardCount = %d	Actual: playedCardCount = %d\n\n", n, pre->playedCardCount+1, post.playedCardCount);
+		printf("Test # %d failed. Card was not added to played card count\nExpected: playedCardCount = %d	Actual: playedCardCount = %d\n\n", n, pre->playedCardCount+1, post.playedCardCount);
 		#endif
 		errors++;
 	}

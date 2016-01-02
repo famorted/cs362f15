@@ -14,8 +14,6 @@ Function prototype added to dominion_helpers.h.
 Introduced a bug in the for loop where the incrementing of i is prefix instead
 of postfix, so that the loop only runs 2 times instead of 3. Common for loop
 condition mistake. Also set the card to be discarded as trash.
-2015/10/25: Changed loop condition to i <= and changed i incrementing from
-prefix to postfix.
 
 ----------------------------------------
 Adventurer
@@ -39,6 +37,7 @@ int councilRoomCard(int currentPlayer, struct gameState* state, int handPos)
 --------------------
 Refactored into the councilRoomCard() function.
 Function prototype added to dominion_helpers.h.
+
 
 ----------------------------------------
 Village
